@@ -1,0 +1,28 @@
+baseURL: "https://acikgozb.com/"
+languageCode: "en-gb"
+title: "acikgozb"
+copyright: "© 2024 [acikgozb](https://github.com/acikgozb). All rights reserved."
+theme: ["PaperMod"]
+
+params:
+  disableThemeToggle: false
+  defaultTheme: "dark"
+
+  profileMode:
+    enabled: true
+    title: "Hello there 👋"
+    subtitle: "Welcome to my little personal bubble in this phenomenon called the Internet."
+    buttons:
+      - name: "About Me"
+        url: "/about"
+      - name: "Posts"
+        url: "/posts"
+  socialIcons:
+    - name: "linkedin"
+      url: "https://linkedin.com/in/acikgozb/"
+    - name: "github"
+      url: "https://github.com/acikgozb"
+  ShowReadingTime: true
+  ShowBreadCrumbs: true
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
