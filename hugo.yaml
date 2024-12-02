@@ -27,10 +27,10 @@ params:
     title: "Hello there 👋"
     subtitle: "Enjoy."
     buttons:
-      - name: "About Me"
-        url: "/about"
       - name: "Posts"
         url: "/posts"
+      - name: "About"
+        url: "/about"
   socialIcons:
     - name: "linkedin"
       url: "https://linkedin.com/in/acikgozb/"

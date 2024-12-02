@@ -3,7 +3,7 @@ date: "2024-11-30T16:33:35+03:00"
 draft: false
 params:
   author: acikgozb
-title: "About Me"
+title: "About"
 ---
 
 Hello again 👋
