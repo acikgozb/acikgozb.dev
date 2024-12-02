@@ -29,6 +29,8 @@ params:
     buttons:
       - name: "Posts"
         url: "/posts"
+      - name: "Projects"
+        url: "/projects"
       - name: "About"
         url: "/about"
   socialIcons:
