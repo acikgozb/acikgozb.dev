@@ -12,11 +12,6 @@ languages:
       category: categories
       tag: tags
       series: series
-    menu:
-      main:
-        - name: "Archives"
-          url: "/archives"
-          weight: 5
 
 params:
   disableThemeToggle: false
@@ -27,10 +22,10 @@ params:
     title: "Hello there 👋"
     subtitle: "Enjoy."
     buttons:
-      - name: "Posts"
-        url: "/posts"
       - name: "Projects"
         url: "/projects"
+      - name: "Posts"
+        url: "/posts"
       - name: "About"
         url: "/about"
   socialIcons:
