@@ -5,9 +5,11 @@ title: "tempgen.nvim"
 summary: "Bootstrap your file the way you want."
 ---
 
-My favorite aspect of Vim/Neovim is the fact that you can take the full advantage of the shell itself, and create little scripts that enhances your own development workflow.
+My favorite aspect of Vim/Neovim is the fact that you can take the full advantage of the shell itself, and create little scripts that enhance your own development workflow.
 
-`tempgen.nvim` is truly an example of this.
+If you can't think of any example, allow me to show you one.
+
+Enter `tempgen.nvim`.
 
 - Concept: _Automation_.
 - Goal: _Better file management_.

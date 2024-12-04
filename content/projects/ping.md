@@ -12,12 +12,12 @@ When it comes to networking, there is this thing called a _cloud provider_ that 
 
 Whilst we can appreciate the abstractions that make our lives easier, I believe we also should have a fairly high level idea of what happens under the hood, especially when it comes to Networking.
 
-So this project is my take on explaining that _high level_ picture through one of its most used tools.
+So this project is my take on explaining that _high level_ picture through one of the most frequently used tools.
 
 Enter `ping`.
 
 - Concept: _Networking_.
-- Goal: _To understand the big picture_.
+- Goal: _Understanding the big picture_.
 - Primary tool: _ping_.
 - Repository: [tcp-ip-journey](https://github.com/acikgozb/tcp-ip-journey/tree/main/1-ping)
 

@@ -113,8 +113,8 @@ Also, we engineers just love storing everything as code. So in this sense this p
 
 So, the implementation consists of:
 
-- Ansible **roles** (e.g `acikgozb.zsh`, `acikgozb.nvim`, `acikgozb.hashicorp`) to have a logical grouping of tools,
-- Ansible **tasks** for **Fedora, Ubuntu, and MacOS** to support multiple operating systems.
+- Ansible roles (e.g `acikgozb.zsh`, `acikgozb.nvim`, `acikgozb.hashicorp`) to have a logical grouping of tools,
+- Ansible tasks for Fedora, Ubuntu, and MacOS to support multiple operating systems.
 - Variables which customize these roles to lower the maintenance cost of updating the installation.
 
 ## Last Words
