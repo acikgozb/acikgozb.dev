@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+cf_resp=$(curl -fsS --request GET --url https://api.cloudflare.com/client/v4/ips --header 'Content-Type: application/json' 2>&1)
+exit_code="$?"
+
+if [[ "$exit_code" -ne 0 ]]; then
+    echo "err: $cf_resp" >&2
+    exit "$exit_code"
+fi
+
+proxy_cidr=$(echo "$cf_resp" | jq '.result.ipv4_cidrs')
+
+jq -n --arg proxy_cidr "$proxy_cidr" '{"list": $proxy_cidr}'
+
