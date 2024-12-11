@@ -5,35 +5,52 @@ terraform {
       version = "~> 4.16"
     }
 
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
+
     external = {
       source  = "hashicorp/external"
       version = "2.3.4"
     }
   }
 
+  backend "s3" {
+    # key = -backend-config
+    # region = -backend-config
+    # profile = "-backend-config"
+  }
+
   required_version = ">= 1.2.0"
 }
 
-provider "aws" {}
+provider "aws" {
+  # profile = $AWS_PROFILE
+  # region = $AWS_REGION
+  default_tags {
+    tags = {
+      Application = var.app_name
+    }
+  }
+}
 
-locals {
-  bucket_id   = "acikgozb-dev"
-  application = "acikgozb.dev"
+provider "cloudflare" {
+  # api_key = $CLOUDFLARE_API_KEY
 }
 
 resource "random_bytes" "bucket_id" {
   keepers = {
-    bucket_id = local.bucket_id
+    app_name = var.app_name
   }
 
   length = 6
 }
 
 resource "aws_s3_bucket" "acikgozb-dev" {
-  bucket = "${local.bucket_id}-${random_bytes.bucket_id.hex}"
+  bucket = "${var.app_name}-${random_bytes.app_name.hex}"
   tags = {
-    Name        = "site-bucket"
-    application = local.application
+    Name = "site-bucket"
   }
 }
 
@@ -61,3 +78,4 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.acikgozb-dev.id
   policy = data.aws_iam_policy_document.s3_policy.json
 }
+
