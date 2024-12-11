@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function dump_env {
+    for ENV_KEY in {"AWS_REGION","AWS_PROFILE"}; do
+        echo "$ENV_KEY: ${!ENV_KEY}"
+    done
+}
+
+function init {
+    terraform init \
+        -backend-config region="$AWS_REGION" \
+        -backend-config bucket="$TF_BACKEND_STATE_BUCKET" \
+        -backend-config key="$TF_BACKEND_KEY" 
+}
+
+function plan {
+    terraform plan \
+        -var app_name="$APP_NAME" \
+        -out ./tfplan 
+}
+
+function apply {
+    terraform apply ./tfplan
+}
+
+function set_vars {
+    APP_NAME="acikgozb-dev"
+    AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text --profile "$AWS_PROFILE")
+
+    TF_BACKEND_STATE_BUCKET="terraform-$AWS_ACCOUNT_ID"    
+    TF_BACKEND_KEY="apps/$APP_NAME.tfstate"
+}
+
+dump_env && set_vars
+
+"$@"
