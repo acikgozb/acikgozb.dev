@@ -102,3 +102,51 @@ resource "cloudflare_cloud_connector_rules" "acikgozb-dev" {
     }
   }
 }
+resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
+  phase       = "http_request_transform"
+  zone_id     = data.cloudflare_zone.root.id
+  name        = "root-zone-transform-rs"
+  description = "Root zone transform ruleset."
+  kind        = "zone"
+
+  rules {
+    enabled     = true
+    description = "Append index.html to URI path."
+    expression  = "(ends_with(http.request.uri.path, \"/\"))"
+
+    action = "rewrite"
+    action_parameters {
+      uri {
+        path {
+          expression = "concat(http.request.uri.path, \"index.html\")"
+        }
+        query {
+          value = ""
+        }
+      }
+    }
+  }
+
+  rules {
+    enabled     = true
+    description = "Append /index.html to URI path."
+    expression = join(" and not ", [
+      "(not starts_with(http.request.uri.path, \"/assets\")",
+      "ends_with(http.request.uri.path, \"/index.html\")",
+      "ends_with(http.request.uri.path, \"/404.html\")",
+      "ends_with(http.request.uri.path, \".xml\"))",
+    ])
+
+    action = "rewrite"
+    action_parameters {
+      uri {
+        path {
+          expression = "concat(http.request.uri.path, \"/\", \"index.html\")"
+        }
+        query {
+          value = ""
+        }
+      }
+    }
+  }
+}
