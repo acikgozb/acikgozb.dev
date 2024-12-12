@@ -39,6 +39,9 @@ provider "aws" {
 provider "cloudflare" {
   # api_token =  = $CLOUDFLARE_API_TOKEN
 }
+
+locals {
+  root_zone_name = "acikgozb.dev"
 }
 
 resource "random_bytes" "bucket_id" {
@@ -50,7 +53,7 @@ resource "random_bytes" "bucket_id" {
 }
 
 resource "aws_s3_bucket" "acikgozb-dev" {
-  bucket = "${var.app_name}-${random_bytes.app_name.hex}"
+  bucket = "${var.app_name}-${random_bytes.bucket_id.hex}"
   tags = {
     Name = "site-bucket"
   }
@@ -81,3 +84,21 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
   policy = data.aws_iam_policy_document.s3_policy.json
 }
 
+data "cloudflare_zone" "root" {
+  name = local.root_zone_name
+}
+
+resource "cloudflare_cloud_connector_rules" "acikgozb-dev" {
+  zone_id = data.cloudflare_zone.root.id
+
+  rules {
+    description = "Connect static S3 bucket to root zone."
+    enabled     = true
+    expression  = "http.uri"
+    provider    = "aws_s3"
+
+    parameters {
+      host = aws_s3_bucket.acikgozb-dev.bucket_regional_domain_name
+    }
+  }
+}
