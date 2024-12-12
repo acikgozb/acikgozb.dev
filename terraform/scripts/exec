@@ -11,6 +11,7 @@ function dump_env {
 function init {
     terraform init \
         -backend-config region="$AWS_REGION" \
+        -backend-config profile="$AWS_PROFILE" \
         -backend-config bucket="$TF_BACKEND_STATE_BUCKET" \
         -backend-config key="$TF_BACKEND_KEY" 
 }

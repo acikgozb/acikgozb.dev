@@ -28,6 +28,7 @@ terraform {
 provider "aws" {
   # profile = $AWS_PROFILE
   # region = $AWS_REGION
+
   default_tags {
     tags = {
       Application = var.app_name
@@ -36,7 +37,8 @@ provider "aws" {
 }
 
 provider "cloudflare" {
-  # api_key = $CLOUDFLARE_API_KEY
+  # api_token =  = $CLOUDFLARE_API_TOKEN
+}
 }
 
 resource "random_bytes" "bucket_id" {
