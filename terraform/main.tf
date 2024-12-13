@@ -30,9 +30,7 @@ provider "aws" {
   # region = $AWS_REGION
 
   default_tags {
-    tags = {
-      Application = var.app_name
-    }
+    tags = local.default_tags
   }
 }
 
@@ -42,6 +40,9 @@ provider "cloudflare" {
 
 locals {
   root_zone_name = "acikgozb.dev"
+  default_tags = {
+    Application = var.app_name
+  }
 }
 
 resource "random_bytes" "bucket_id" {
@@ -52,43 +53,43 @@ resource "random_bytes" "bucket_id" {
   length = 6
 }
 
-resource "aws_s3_bucket" "acikgozb-dev" {
+resource "aws_s3_bucket" "acikgozb_dev" {
   bucket = "${var.app_name}-${random_bytes.bucket_id.hex}"
   tags = {
     Name = "site-bucket"
   }
 }
 
-data "external" "cloudflare-cidr-ranges" {
+data "external" "cloudflare_cidr_ranges" {
   program = ["bash", "${path.module}/scripts/cloudflare-proxy-cidr"]
 }
 
-data "aws_iam_policy_document" "s3_policy" {
+data "aws_iam_policy_document" "cf_only_ingress" {
   statement {
     actions = ["s3:GetObject"]
 
-    resources = [aws_s3_bucket.acikgozb-dev.arn]
+    resources = [aws_s3_bucket.acikgozb_dev.arn]
 
     condition {
       test     = "IpAddress"
       variable = "aws:SourceIp"
-      values   = jsondecode(data.external.cloudflare-cidr-ranges.result.list)
+      values   = jsondecode(data.external.cloudflare_cidr_ranges.result.list)
     }
   }
 
-  depends_on = [data.external.cloudflare-cidr-ranges]
+  depends_on = [data.external.cloudflare_cidr_ranges]
 }
 
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.acikgozb-dev.id
-  policy = data.aws_iam_policy_document.s3_policy.json
+resource "aws_s3_bucket_policy" "cf_only_ingress" {
+  bucket = aws_s3_bucket.acikgozb_dev.id
+  policy = data.aws_iam_policy_document.cf_only_ingress.json
 }
 
 data "cloudflare_zone" "root" {
   name = local.root_zone_name
 }
 
-resource "cloudflare_cloud_connector_rules" "acikgozb-dev" {
+resource "cloudflare_cloud_connector_rules" "acikgozb_dev" {
   zone_id = data.cloudflare_zone.root.id
 
   rules {
@@ -98,7 +99,7 @@ resource "cloudflare_cloud_connector_rules" "acikgozb-dev" {
     provider    = "aws_s3"
 
     parameters {
-      host = aws_s3_bucket.acikgozb-dev.bucket_regional_domain_name
+      host = aws_s3_bucket.acikgozb_dev.bucket_regional_domain_name
     }
   }
 }
@@ -169,3 +170,24 @@ resource "cloudflare_workers_route" "redirect" {
   script_name = cloudflare_workers_script.redirect.name
 }
 
+resource "cloudflare_record" "bucket_cname" {
+  zone_id = data.cloudflare_zone.root.id
+  name    = local.root_zone_name
+  type    = "CNAME"
+  content = aws_s3_bucket.acikgozb_dev.bucket_regional_domain_name
+  proxied = true
+  comment = "CNAME for site bucket."
+
+  tags = [for k, v in local.default_tags : "${k}, ${v}"]
+}
+
+resource "cloudflare_record" "www_cname" {
+  zone_id = data.cloudflare_zone.root.id
+  name    = "www"
+  type    = "CNAME"
+  content = local.root_zone_name
+  proxied = true
+  comment = "CNAME for www."
+
+  tags = [for k, v in local.default_tags : "${k}, ${v}"]
+}

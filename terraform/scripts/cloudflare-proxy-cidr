@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
 
 cf_resp=$(curl -fsS --request GET --url https://api.cloudflare.com/client/v4/ips --header 'Content-Type: application/json' 2>&1)
 exit_code="$?"
