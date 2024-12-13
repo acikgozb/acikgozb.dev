@@ -1,6 +1,6 @@
 ---
 date: "2024-12-03T11:37:25+03:00"
-draft: true
+draft: false
 title: "Local CI"
 summary: "Test your Jenkins pipelines locally."
 ---
@@ -31,7 +31,7 @@ My choices were quite straightforward:
 
 The service itself is really simple and the type of service (API, serverless, scheduler, etc.) doesn't matter that much.
 It just needs to have one test and a feature to be tested.
-So for the language, I choose **Golang**:
+So, for the language, I choose **Golang**:
 
 - It's really fun to play, I don't know why.
 - It's pretty dead simple to get it up and running, you just have an entrypoint and a module state and that's it, which is perfect for this project.
@@ -40,7 +40,7 @@ So for the language, I choose **Golang**:
 For the pipeline, my weapon of choice is **Jenkins**:
 
 - It is by far the most commonly used tool in the industry, we can't deny it.
-- I already actively use Github Actions in where I work, so I wanted to try something else to add a little bit more challenge.
+- I already actively use Github Actions at where I work, so I wanted to try something else to add a little bit more challenge.
 
 ## More About the "Goal"
 
@@ -51,7 +51,7 @@ Normally, a pipeline can be quite complex based on the actual need, so in order 
 - It is forbidden to install any language runtime on the Jenkins agent other than Java. The agent should stay as clean as possible.
 - The pipeline should spin up **ephemeral containers** to execute the CI steps, and then remove them when there is no error.
 - If there is an error, it should be visible to the output and developers should be able to exec into the build container to troubleshoot the issue.
-- **Any container image** can be used by the actual pipeline.
+- **Any container image** can be used by the pipeline.
 
 ---
 
