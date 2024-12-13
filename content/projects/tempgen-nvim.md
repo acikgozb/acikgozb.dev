@@ -1,13 +1,13 @@
 ---
 date: "2024-12-02T15:17:28+03:00"
-draft: true
+draft: false
 title: "tempgen.nvim"
 summary: "Bootstrap your file the way you want."
 ---
 
-My favorite aspect of Vim/Neovim is the fact that you can take the full advantage of the shell itself, and create little scripts that enhance your own development workflow.
+My favorite aspect of Vim/Neovim is the fact that you can take full advantage of the shell itself, and create little scripts that enhance your own development workflow.
 
-If you can't think of any example, allow me to show you one.
+If you can't think of any examples, allow me to show you one.
 
 Enter `tempgen.nvim`.
 
@@ -48,7 +48,7 @@ Also, if you find yourself updating 3rd party CLI generated files a little bit e
 
 ### Project Code
 
-This one is a little bit stretch, but still possible.
+This one is a little bit of stretch, but still possible.
 
 If you discover a nice structure and want to use it in your future projects, automate it away!
 
@@ -59,9 +59,9 @@ If you discover a nice structure and want to use it in your future projects, aut
 **Long answer**: I implemented this project because:
 
 - My needs were pretty simple,
-- I wanted to dive into developing a Neovim plugin instead of consuming another one to see how the experience is.
+- I wanted to dive into developing a Neovim plugin instead of using another one to see how the experience is.
 
-I acknowledge the fact that the tool is not fully fledged out and there is a nice room for improvement.
+I acknowledge the fact that the tool is not fully fledged and there is a nice room for improvement.
 That is why I added the [TODO section](https://github.com/acikgozb/tempgen.nvim?tab=readme-ov-file#todo) to the repository.
 
 ---

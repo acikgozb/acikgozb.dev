@@ -1,6 +1,6 @@
 ---
 date: "2024-12-02T16:55:15+03:00"
-draft: true
+draft: false
 title: "Dotfiles"
 summary: "Local environment configuration. Powered by Ansible."
 ---
@@ -8,14 +8,14 @@ summary: "Local environment configuration. Powered by Ansible."
 Imagine this:
 
 You have your personal workstation and have been using it extensively for a couple of years.
-As a result, you have done numerous changes on that workstation:
+As a result, you have made numerous changes to that workstation:
 
 - Installed a lot of tools,
 - Configured them for your liking,
 - Fixed issues through hard work, frustration and sweat.
 
 Unfortunately, the time has come and you have to change it.
-But, that also means doing all the hardwork again to make it same like the previous one.
+But, that also means doing all the hard work again to make it the same as the previous one.
 
 If you wonder whether there is a way to _not_ do it all over again, yes, there is:
 
@@ -94,7 +94,7 @@ So basically, the idea is to:
 
 ## Why Is It Called "Dotfiles"?
 
-Normally, the configuration files and directories usually start with a `.` (dot) in Unix world such as `.bashrc` or `.ssh`.
+Normally, the configuration files and directories usually start with a `.` (dot) in the Unix world, such as `.bashrc` or `.ssh`.
 These files are also hidden.
 
 Since our goal is to store our configuration files which represent our unique local environment, the directory that holds these files is called **dotfiles** as a convention.
@@ -102,14 +102,14 @@ Since our goal is to store our configuration files which represent our unique lo
 ## The Implementation
 
 There are different ways of executing this idea.
-Essentially, all of them does more or less the same thing with the example case above.
+Essentially, all of them do more or less the same thing with the example case above.
 
 I went with **Ansible** as my weapon of choice because **dotfiles** is essentially a **configuration management project**.
-The main thing that differs from actual configuration management is that **the managed host is my own local host instead of a fleet of servers**.
+The main thing that differs from the actual configuration management is that **the managed host is my own local host instead of a fleet of servers**.
 
 Since managing one host is a lot easier than managing a thousand, I thought this is a perfect opportunity to get my hands dirty with Ansible.
 
-Also, we engineers just love storing everything as code. So in this sense this project is again - a perfect opportunity.
+Also, we engineers just love storing everything as code. So, in this sense, this project is again a perfect opportunity.
 
 So, the implementation consists of:
 
@@ -119,14 +119,16 @@ So, the implementation consists of:
 
 ## Last Words
 
-I'll be blunt in here, I would highly encourage anyone reading this to just jump right in and create their own dotfiles instead of just installing mine and call it a day.
-These configurations are what work for me and my own taste, you will probably disagree with most of the settings.
+I'll be blunt here, I would highly encourage anyone reading this to just jump right in and create their own dotfiles instead of just installing mine and calling it a day.
+These configurations are what work for me and my own taste.
+You will probably disagree with most of the settings.
 
 I believe everyone should find their own unique local environment configuration, and then slowly create their dotfiles.
 
-You can reference this project, I believe it can be a good starting point especially the installation parts with Ansible.
+You can use this project as a reference. I believe it can be a good starting point especially the installation parts with Ansible.
 
-This does not mean that everything here is absolutely perfect, as I said before this was just an opportunity for me to gain experience in Ansible and have fun while doing so.
+This does not mean that everything here is absolutely perfect.
+As I said before, this was just an opportunity for me to gain experience in Ansible and have fun while doing so.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 date: "2024-11-30T23:27:31+03:00"
-draft: true
+draft: false
 title: "Hello, World!"
 summary: "First, an introduction."
 ---
