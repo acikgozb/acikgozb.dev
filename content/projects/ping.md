@@ -1,6 +1,6 @@
 ---
 date: "2024-12-02T22:47:58+03:00"
-draft: true
+draft: false
 title: "Ping"
 summary: "An analysis of one of the most used tools in TCP/IP."
 ---
@@ -10,7 +10,7 @@ If our desire is to become better at managing server infrastructure, we can't ig
 However, in today's world, we use lots of abstractions to build software.
 When it comes to networking, there is this thing called a _cloud provider_ that lets people rent their own private space on the Internet. Basically, you run _your_ software on _their_ infrastructure.
 
-Whilst we can appreciate the abstractions that make our lives easier, I believe we also should have a fairly high level idea of what happens under the hood, especially when it comes to Networking.
+Whilst we can appreciate the abstractions that make our lives easier, I believe we also should have a fairly high level idea of what happens under the hood, especially when it comes to networking.
 
 So this project is my take on explaining that _high level_ picture through one of the most frequently used tools.
 
@@ -29,11 +29,11 @@ I didn't want to duplicate the information to make this post longer and prettier
 
 However, I do want to say a couple of things:
 
-- The notes provided in the repository are just my understanding of several Networking concepts.
+- The notes provided in the repository are just my understanding of several networking concepts.
   There may be some misunderstandings and if that is the case, I would really like to have a feedback from you.
 
-- There were times where I had to explain a specific concept briefly to not steer too much away from the main topic.
-  Therefore the concepts that are explained in this study are actually much more deep than what they appear to be.
+- There were times when I had to explain a specific concept briefly to not steer too much away from the main topic.
+  Therefore, the concepts that are explained in this study are actually much deeper than what they appear to be.
 
 - No AI was harmed during the process.
 
