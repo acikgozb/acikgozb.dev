@@ -1,0 +1,54 @@
+name: Deploy acikgozb.dev
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+defaults:
+  run:
+    working-directory: "./terraform"
+
+env:
+  APP_NAME: "acikgozb-dev"
+  AWS_REGION: "{{ secrets.AWS_REGION }}"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to AWS via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: "{{ env.AWS_REGION }}"
+          role-to-assume: "{{ secrets.AWS_OIDC_ROLE_ARN }}"
+          role-session-name: "${{ env.APP_NAME }}-gha"
+
+      - name: Set environment
+        run: |
+          read -r -a tf_env < <(./scripts/exec set_environment)
+          for env in ${tf_env[@]}; do \
+            key=${env%:*} \
+            value=${env#*:} \
+            echo "$key=$value" >> "$GITHUB_ENV"; \
+          done
+
+      - name: Initialize Terraform
+        run: |
+          ./scripts/exec init
+
+      - name: Create Terraform plan
+        run: |
+          ./scripts/exec plan
+
+      - name: Apply Terraform plan
+        run: |
+          ./scripts/exec apply
