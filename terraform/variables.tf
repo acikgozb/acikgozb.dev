@@ -7,3 +7,8 @@ variable "app_name" {
     error_message = "The variable 'app_name' cannot contain whitespaces."
   }
 }
+
+variable "redirect_worker_path" {
+  type        = string
+  description = "The binary path of our Cloudflare redirect worker."
+}

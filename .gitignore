@@ -1,2 +1,10 @@
+# Hugo output.
 /public
+
+# Terraform local configuration.
 **/.terraform/*
+
+# Cloudflare Worker (TS).
+**/out/*
+**/node_modules/*
+**/.wrangler/*

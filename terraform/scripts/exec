@@ -16,10 +16,26 @@ function init {
         -backend-config key="$TF_BACKEND_KEY" 
 }
 
+function generate_artifacts {
+    cd ./scripts/redirect-worker
+
+    npm ci
+    wrangler deploy --outdir ./out --config ./wrangler.toml --dry-run
+
+    REDIRECT_WORKER_PATH="./scripts/redirect-worker/out/index.js"
+
+    cd - > /dev/null
+}
+
 function plan {
-    terraform plan \
-        -var app_name="$APP_NAME" \
-        -out ./tfplan 
+    generate_artifacts
+
+    cat > ./terraform.tfvars <<-_EOF
+        app_name="$APP_NAME"
+        redirect_worker_path="$REDIRECT_WORKER_PATH"
+_EOF
+
+    terraform plan -var-file ./terraform.tfvars -out ./tfplan 
 }
 
 function apply {

@@ -102,6 +102,7 @@ resource "cloudflare_cloud_connector_rules" "acikgozb-dev" {
     }
   }
 }
+
 resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
   phase       = "http_request_transform"
   zone_id     = data.cloudflare_zone.root.id
@@ -150,3 +151,21 @@ resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
     }
   }
 }
+
+resource "cloudflare_workers_script" "redirect" {
+  name       = "redirect"
+  account_id = data.cloudflare_zone.root.account_id
+  content    = file(var.redirect_worker_path)
+
+  plain_text_binding {
+    name = "HOST"
+    text = local.root_zone_name
+  }
+}
+
+resource "cloudflare_workers_route" "redirect" {
+  zone_id     = data.cloudflare_zone.root.id
+  pattern     = "https://${local.root_zone_name}/*"
+  script_name = cloudflare_workers_script.redirect.name
+}
+
