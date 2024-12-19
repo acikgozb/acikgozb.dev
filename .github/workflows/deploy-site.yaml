@@ -1,4 +1,4 @@
-name: Deploy acikgozb.dev
+name: Release
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
         with:
           aws-region: "{{ env.AWS_REGION }}"
           role-to-assume: "{{ secrets.AWS_OIDC_ROLE_ARN }}"
-          role-session-name: "${{ env.APP_NAME }}-gha"
+          role-session-name: "${{ env.APP_NAME }}-cd-session-${{ github.build_number }}"
 
       - name: Set environment
         run: |
