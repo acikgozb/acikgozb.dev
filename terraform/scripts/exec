@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-function set_environment {
+function environment {
     APP_NAME="acikgozb-dev"
     AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text --profile "$AWS_PROFILE")
 
@@ -36,6 +36,7 @@ function plan {
     cat > ./terraform.tfvars <<-_EOF
 app_name="$APP_NAME"
 redirect_worker_path="$REDIRECT_WORKER_PATH"
+frontend_asset_path="$FRONTEND_ASSET_PATH"
 _EOF
 
     terraform plan -var-file ./terraform.tfvars -out ./tfplan 

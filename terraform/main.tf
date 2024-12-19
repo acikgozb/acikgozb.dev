@@ -39,7 +39,9 @@ provider "cloudflare" {
 }
 
 locals {
-  root_zone_name = "acikgozb.dev"
+  root_zone_name      = "acikgozb.dev"
+  frontend_asset_path = "${path.module}/../${var.frontend_asset_path}"
+
   default_tags = {
     Application = var.app_name
   }
@@ -58,6 +60,16 @@ resource "aws_s3_bucket" "acikgozb_dev" {
   tags = {
     Name = "site-bucket"
   }
+}
+
+resource "aws_s3_object" "acikgozb_dev_content" {
+  for_each = fileset("${local.frontend_asset_path}/", "**")
+
+  bucket = aws_s3_bucket.acikgozb_dev.bucket
+  key    = each.value
+  source = "${local.frontend_asset_path}/${each.value}"
+
+  etag = filemd5("${local.frontend_asset_path}/${each.value}")
 }
 
 data "external" "cloudflare_cidr_ranges" {

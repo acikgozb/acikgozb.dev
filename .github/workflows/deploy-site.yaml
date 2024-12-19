@@ -9,23 +9,40 @@ permissions:
   id-token: write
   contents: read
 
-defaults:
-  run:
-    working-directory: "./terraform"
-
 env:
   APP_NAME: "acikgozb-dev"
   AWS_REGION: "{{ secrets.AWS_REGION }}"
   CLOUDFLARE_API_TOKEN: "{{ secrets.CLOUDFLARE_API_TOKEN }}"
+  FRONTEND_ASSET_PATH: "public"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  create-frontend-assets:
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install `hugo`
+        shell: bash
+        run: |
+          apt install hugo -y
+
+      - name: Create frontend assets
+        shell: bash
+        run: |
+          hugo build --destination $FRONTEND_ASSET_PATH
+
+  deploy:
+    runs-on: ubuntu-24.04
+    needs: create-frontend-assets
+
+    defaults:
+      run:
+        working-directory: ./terraform
+        shell: bash
+
+    steps:
       - name: Authenticate to AWS via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -35,7 +52,7 @@ jobs:
 
       - name: Set environment
         run: |
-          read -r -a tf_env < <(./scripts/exec set_environment)
+          read -r -a tf_env < <(./scripts/exec environment)
           for env in ${tf_env[@]}; do \
             key=${env%:*} \
             value=${env#*:} \

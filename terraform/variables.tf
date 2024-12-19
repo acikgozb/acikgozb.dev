@@ -12,3 +12,8 @@ variable "redirect_worker_path" {
   type        = string
   description = "The binary path of our Cloudflare redirect worker."
 }
+
+variable "frontend_asset_path" {
+  type        = string
+  description = "The asset (output) path of the website."
+}
