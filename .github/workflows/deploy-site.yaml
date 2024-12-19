@@ -22,16 +22,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Install `hugo`
-        shell: bash
-        run: |
-          sudo apt-get install hugo -y
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 0.139.3
 
       - name: Create frontend assets
         shell: bash
         run: |
-          hugo build --destination $FRONTEND_ASSET_PATH
+          hugo build --destination "$FRONTEND_ASSET_PATH" --minify
 
   deploy:
     runs-on: ubuntu-24.04
