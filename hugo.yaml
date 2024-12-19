@@ -1,4 +1,4 @@
-baseURL: "https://acikgozb.com/"
+baseURL: "https://acikgozb.dev/"
 languageCode: "en-gb"
 title: "@acikgozb"
 copyright: "© 2024 [acikgozb](https://github.com/acikgozb). All rights reserved."
@@ -8,10 +8,6 @@ languages:
   en:
     languageName: "English"
     weight: 1
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
 
 params:
   disableThemeToggle: false
