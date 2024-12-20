@@ -78,4 +78,4 @@ jobs:
 
       - name: Apply Terraform plan
         run: |
-          ./scripts/exec apply
+          ./scripts/exec apply > /dev/null

@@ -80,6 +80,11 @@ data "aws_iam_policy_document" "cf_only_ingress" {
   statement {
     actions = ["s3:GetObject"]
 
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
     resources = [aws_s3_bucket.acikgozb_dev.arn]
 
     condition {
@@ -189,8 +194,6 @@ resource "cloudflare_record" "bucket_cname" {
   content = aws_s3_bucket.acikgozb_dev.bucket_regional_domain_name
   proxied = true
   comment = "CNAME for site bucket."
-
-  tags = [for k, v in local.default_tags : "${k}, ${v}"]
 }
 
 resource "cloudflare_record" "www_cname" {
@@ -200,6 +203,4 @@ resource "cloudflare_record" "www_cname" {
   content = local.root_zone_name
   proxied = true
   comment = "CNAME for www."
-
-  tags = [for k, v in local.default_tags : "${k}, ${v}"]
 }
