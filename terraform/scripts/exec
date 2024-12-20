@@ -4,6 +4,8 @@ set -euo pipefail
 
 function environment {
     APP_NAME="acikgozb-dev"
+
+    AWS_PROFILE="${AWS_PROFILE:-default}"
     AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text --profile "$AWS_PROFILE")
 
     TF_BACKEND_STATE_BUCKET="terraform-$AWS_ACCOUNT_ID"    

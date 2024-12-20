@@ -26,8 +26,8 @@ terraform {
 }
 
 provider "aws" {
-  # profile = $AWS_PROFILE
   # region = $AWS_REGION
+  # profile = $AWS_PROFILE -> for local development.
 
   default_tags {
     tags = local.default_tags
