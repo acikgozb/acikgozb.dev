@@ -62,6 +62,15 @@ resource "aws_s3_bucket" "acikgozb_dev" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "acikgozb_dev" {
+  bucket = aws_s3_bucket.acikgozb_dev.id
+
+  block_public_acls       = true
+  ignore_public_acls      = true
+  block_public_policy     = false
+  restrict_public_buckets = false
+}
+
 resource "aws_s3_object" "acikgozb_dev_content" {
   for_each = fileset("${local.frontend_artifact_path}/", "**")
 
