@@ -3,11 +3,13 @@
 set -euo pipefail
 
 function environment {
-    APP_NAME="acikgozb-dev"
+    GET_CALLER_IDENTITY_ARGS=(--query Account --output text)
+    if [[ -n "${AWS_PROFILE:-}" ]]; then
+        GET_CALLER_IDENTITY_ARGS+=(--profile "$AWS_PROFILE")
+    fi
+    AWS_ACCOUNT_ID=$(aws sts get-caller-identity "${GET_CALLER_IDENTITY_ARGS[@]}")
 
-    AWS_PROFILE="${AWS_PROFILE:-default}"
-    AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text --profile "$AWS_PROFILE")
-
+    APP_NAME="${APP_NAME:-"acikgozb-dev"}"
     TF_BACKEND_STATE_BUCKET="terraform-$AWS_ACCOUNT_ID"    
     TF_BACKEND_KEY="apps/$APP_NAME.tfstate"
 
