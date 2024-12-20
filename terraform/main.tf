@@ -40,7 +40,7 @@ provider "cloudflare" {
 
 locals {
   root_zone_name         = "acikgozb.dev"
-  frontend_artifact_path = "${path.module}/${var.frontend_artifact_path}"
+  frontend_artifact_path = "${path.module}/../${var.frontend_artifact_path}"
 
   default_tags = {
     Application = var.app_name
