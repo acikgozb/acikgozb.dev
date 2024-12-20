@@ -193,6 +193,7 @@ resource "cloudflare_workers_script" "redirect" {
   name       = "redirect"
   account_id = data.cloudflare_zone.root.account_id
   content    = file(var.redirect_worker_path)
+  module     = true
 
   plain_text_binding {
     name = "HOST"
