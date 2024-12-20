@@ -40,7 +40,7 @@ function plan {
     cat > ./terraform.tfvars <<-_EOF
 app_name="$APP_NAME"
 redirect_worker_path="$REDIRECT_WORKER_PATH"
-frontend_asset_path="$FRONTEND_ASSET_PATH"
+frontend_artifact_path="$FRONTEND_ARTIFACT_PATH"
 _EOF
 
     terraform plan -var-file ./terraform.tfvars -out ./tfplan 

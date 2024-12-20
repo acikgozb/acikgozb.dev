@@ -13,7 +13,7 @@ env:
   APP_NAME: "acikgozb-dev"
   AWS_REGION: "${{ secrets.AWS_REGION }}"
   CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
-  FRONTEND_ASSET_PATH: "public"
+  FRONTEND_ARTIFACT_PATH: "public"
 
 jobs:
   create-frontend-assets:
@@ -30,10 +30,16 @@ jobs:
         with:
           hugo-version: 0.139.3
 
-      - name: Create frontend assets
+      - name: Create frontend artifact
         shell: bash
         run: |
-          hugo build --destination "$FRONTEND_ASSET_PATH" --minify
+          hugo build --destination "$FRONTEND_ARTIFACT_PATH" --minify
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-artifact
+          path: "${{ env.FRONTEND_ARTIFACT_PATH }}"
 
   deploy:
     runs-on: ubuntu-24.04
@@ -72,10 +78,20 @@ jobs:
         run: |
           ./scripts/exec init
 
-      - name: Create Terraform plan
-        run: |
-          ./scripts/exec plan
+      - name: Download frontend artifact for deployment
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-artifact
+          path: "${{ env.FRONTEND_ARTIFACT_PATH}}"
 
-      - name: Apply Terraform plan
+      - name: Debug the workdir
         run: |
-          ./scripts/exec apply > /dev/null
+          ls -R
+
+    # - name: Create Terraform plan
+    #   run: |
+    #     ./scripts/exec plan
+    #
+    # - name: Apply Terraform plan
+    #   run: |
+    #     ./scripts/exec apply > /dev/null
