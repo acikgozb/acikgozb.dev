@@ -2,6 +2,9 @@
   "name": "redirect-worker",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "generate-artifact": "./node_modules/wrangler/bin/wrangler.js deploy --outdir ./out --config ./wrangler.toml --dry-run"
+  },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241205.0",
     "typescript": "^5.5.2",

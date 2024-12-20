@@ -27,7 +27,7 @@ function generate_artifacts {
     cd ./scripts/redirect-worker
 
     npm ci
-    wrangler deploy --outdir ./out --config ./wrangler.toml --dry-run
+    npm run generate-artifact
 
     REDIRECT_WORKER_PATH="./scripts/redirect-worker/out/index.js"
 
