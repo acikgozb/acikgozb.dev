@@ -130,7 +130,7 @@ resource "cloudflare_cloud_connector_rules" "acikgozb_dev" {
   rules {
     description = "Connect static S3 bucket to root zone."
     enabled     = true
-    expression  = "http.uri"
+    expression  = "http.host eq \"www.${local.root_zone_name}\" or http.host eq \"${local.root_zone_name}\""
     provider    = "aws_s3"
 
     parameters {
