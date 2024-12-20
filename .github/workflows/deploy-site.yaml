@@ -8,6 +8,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  actions: write
 
 env:
   APP_NAME: "acikgozb-dev"
@@ -70,6 +71,7 @@ jobs:
           read -r -a tf_env < <(./scripts/exec environment); \
           for env in ${tf_env[@]}; \
           do \
+            echo "::add-mask::${env#*:}"
             echo "${env%:*}=${env#*:}" >> "$GITHUB_ENV"; \
           done
 
@@ -90,11 +92,12 @@ jobs:
 
       - name: Create Terraform plan
         run: |
-          ./scripts/exec plan
-        #
-        # - name: Apply Terraform plan
-        #   run: |
-        #     ./scripts/exec apply > /dev/null
+          ./scripts/exec plan > /dev/null
+
+      - name: Apply Terraform plan
+        run: |
+          ./scripts/exec apply > /dev/null
+
       - name: Cleanup the frontend artifact
         if: always()
         uses: actions/github-script@v7
