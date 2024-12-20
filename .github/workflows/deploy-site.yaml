@@ -63,6 +63,11 @@ jobs:
             echo "${env%:*}=${env#*:}" >> "$GITHUB_ENV"; \
           done
 
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
       - name: Initialize Terraform
         run: |
           ./scripts/exec init
