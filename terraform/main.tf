@@ -148,24 +148,6 @@ resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
 
   rules {
     enabled     = true
-    description = "Append index.html to URI path."
-    expression  = "(ends_with(http.request.uri.path, \"/\"))"
-
-    action = "rewrite"
-    action_parameters {
-      uri {
-        path {
-          expression = "concat(http.request.uri.path, \"index.html\")"
-        }
-        query {
-          value = ""
-        }
-      }
-    }
-  }
-
-  rules {
-    enabled     = true
     description = "Append /index.html to URI path."
     expression = join(" and not ", [
       "(not starts_with(http.request.uri.path, \"/assets\")",
@@ -186,6 +168,25 @@ resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
       }
     }
   }
+
+  rules {
+    enabled     = true
+    description = "Append index.html to URI path."
+    expression  = "(ends_with(http.request.uri.path, \"/\"))"
+
+    action = "rewrite"
+    action_parameters {
+      uri {
+        path {
+          expression = "concat(http.request.uri.path, \"index.html\")"
+        }
+        query {
+          value = ""
+        }
+      }
+    }
+  }
+
 }
 
 resource "cloudflare_workers_script" "redirect" {
