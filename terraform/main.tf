@@ -72,8 +72,8 @@ resource "aws_s3_bucket" "acikgozb_dev" {
 resource "aws_s3_bucket_public_access_block" "acikgozb_dev" {
   bucket = aws_s3_bucket.acikgozb_dev.id
 
-  block_public_acls       = true
-  ignore_public_acls      = true
+  block_public_acls       = false
+  ignore_public_acls      = false
   block_public_policy     = false
   restrict_public_buckets = false
 }
@@ -103,7 +103,7 @@ data "aws_iam_policy_document" "cf_only_ingress" {
       identifiers = ["*"]
     }
 
-    resources = [aws_s3_bucket.acikgozb_dev.arn]
+    resources = ["${aws_s3_bucket.acikgozb_dev.arn}/*"]
 
     condition {
       test     = "IpAddress"
