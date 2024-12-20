@@ -42,6 +42,13 @@ locals {
   root_zone_name         = "acikgozb.dev"
   frontend_artifact_path = "${path.module}/../${var.frontend_artifact_path}"
 
+  content_type_map = {
+    "js"   = "application/json"
+    "xml"  = "application/xml"
+    "html" = "text/html"
+    "css"  = "text/css"
+  }
+
   default_tags = {
     Application = var.app_name
   }
@@ -77,6 +84,8 @@ resource "aws_s3_object" "acikgozb_dev_content" {
   bucket = aws_s3_bucket.acikgozb_dev.bucket
   key    = each.value
   source = "${local.frontend_artifact_path}/${each.value}"
+
+  content_type = lookup(local.content_type_map, reverse(split(".", "${local.frontend_artifact_path}/${each.value}"))[0], "text/html")
 
   etag = filemd5("${local.frontend_artifact_path}/${each.value}")
 }
