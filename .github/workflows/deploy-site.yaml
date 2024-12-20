@@ -57,11 +57,10 @@ jobs:
 
       - name: Set environment
         run: |
-          read -r -a tf_env < <(./scripts/exec environment)
-          for env in ${tf_env[@]}; do \
-            key=${env%:*} \
-            value=${env#*:} \
-            echo "$key=$value" >> "$GITHUB_ENV"; \
+          read -r -a tf_env < <(./scripts/exec environment); \
+          for env in ${tf_env[@]}; \
+          do \
+            echo "${env%:*}=${env#*:}" >> "$GITHUB_ENV"; \
           done
 
       - name: Initialize Terraform
