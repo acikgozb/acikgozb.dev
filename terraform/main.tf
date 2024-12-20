@@ -42,6 +42,13 @@ locals {
   root_zone_name         = "acikgozb.dev"
   frontend_artifact_path = "${path.module}/../${var.frontend_artifact_path}"
 
+  content_type_map = {
+    "js"   = "application/json"
+    "xml"  = "application/xml"
+    "html" = "text/html"
+    "css"  = "text/css"
+  }
+
   default_tags = {
     Application = var.app_name
   }
@@ -65,8 +72,8 @@ resource "aws_s3_bucket" "acikgozb_dev" {
 resource "aws_s3_bucket_public_access_block" "acikgozb_dev" {
   bucket = aws_s3_bucket.acikgozb_dev.id
 
-  block_public_acls       = true
-  ignore_public_acls      = true
+  block_public_acls       = false
+  ignore_public_acls      = false
   block_public_policy     = false
   restrict_public_buckets = false
 }
@@ -77,6 +84,8 @@ resource "aws_s3_object" "acikgozb_dev_content" {
   bucket = aws_s3_bucket.acikgozb_dev.bucket
   key    = each.value
   source = "${local.frontend_artifact_path}/${each.value}"
+
+  content_type = lookup(local.content_type_map, reverse(split(".", "${local.frontend_artifact_path}/${each.value}"))[0], "text/html")
 
   etag = filemd5("${local.frontend_artifact_path}/${each.value}")
 }
@@ -94,7 +103,7 @@ data "aws_iam_policy_document" "cf_only_ingress" {
       identifiers = ["*"]
     }
 
-    resources = [aws_s3_bucket.acikgozb_dev.arn]
+    resources = ["${aws_s3_bucket.acikgozb_dev.arn}/*"]
 
     condition {
       test     = "IpAddress"
@@ -121,7 +130,7 @@ resource "cloudflare_cloud_connector_rules" "acikgozb_dev" {
   rules {
     description = "Connect static S3 bucket to root zone."
     enabled     = true
-    expression  = "http.uri"
+    expression  = "http.host eq \"www.${local.root_zone_name}\" or http.host eq \"${local.root_zone_name}\""
     provider    = "aws_s3"
 
     parameters {
@@ -136,24 +145,6 @@ resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
   name        = "root-zone-transform-rs"
   description = "Root zone transform ruleset."
   kind        = "zone"
-
-  rules {
-    enabled     = true
-    description = "Append index.html to URI path."
-    expression  = "(ends_with(http.request.uri.path, \"/\"))"
-
-    action = "rewrite"
-    action_parameters {
-      uri {
-        path {
-          expression = "concat(http.request.uri.path, \"index.html\")"
-        }
-        query {
-          value = ""
-        }
-      }
-    }
-  }
 
   rules {
     enabled     = true
@@ -177,12 +168,32 @@ resource "cloudflare_ruleset" "acikgozb_dev_transform_rules" {
       }
     }
   }
+
+  rules {
+    enabled     = true
+    description = "Append index.html to URI path."
+    expression  = "(ends_with(http.request.uri.path, \"/\"))"
+
+    action = "rewrite"
+    action_parameters {
+      uri {
+        path {
+          expression = "concat(http.request.uri.path, \"index.html\")"
+        }
+        query {
+          value = ""
+        }
+      }
+    }
+  }
+
 }
 
 resource "cloudflare_workers_script" "redirect" {
   name       = "redirect"
   account_id = data.cloudflare_zone.root.account_id
   content    = file(var.redirect_worker_path)
+  module     = true
 
   plain_text_binding {
     name = "HOST"
