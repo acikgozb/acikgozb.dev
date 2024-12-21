@@ -4,7 +4,7 @@ The main codebase of my personal website, allows me to have a personal bubble on
 
 ## Architecture
 
-[architecture](./readme-assets/architecture)
+![architecture](./readme-assets/architecture)
 
 When it comes to static websites, there are a lot of _easier_ options to go with, such as:
 
