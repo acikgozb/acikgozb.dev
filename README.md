@@ -11,7 +11,7 @@ When it comes to static websites, there are a lot of _easier_ options to go with
 - Github Pages
 - Cloudflare Pages
 - AWS Amplify
-- \*.. and many more\*\*
+- .. and many more
 
 If you do _not_ want to deal with the underlying infrastructure of a static website, you can go with the options above and have something up and running quite fast.
 
