@@ -24,3 +24,7 @@ The total cost of this website is the cost of the domain name itself, which is 1
 This project takes advantage of the free plans of Cloudflare and AWS.
 
 I have to say, Cloudflare's free plan is **REALLY** generous, which makes experimenting a lot more fun.
+
+## Details
+
+For more information regarding the requirements, tech stack, and certain decisions, you can check out [this](https://acikgozb.dev/projects/acikgozb.dev) post.
