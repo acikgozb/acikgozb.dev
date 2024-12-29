@@ -1,6 +1,8 @@
 ---
 date: "2024-12-02T15:17:28+03:00"
 draft: false
+params:
+  author: acikgozb
 title: "tempgen.nvim"
 summary: "Bootstrap your file the way you want."
 ---

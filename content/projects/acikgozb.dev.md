@@ -1,6 +1,8 @@
 ---
 date: "2024-12-22T19:53:17+03:00"
 draft: false
+params:
+  author: acikgozb
 title: "acikgozb.dev"
 summary: "The very website you are reading right now. Powered by Cloudflare and AWS."
 ---

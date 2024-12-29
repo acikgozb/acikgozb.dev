@@ -1,6 +1,8 @@
 ---
 date: "2024-12-02T22:47:58+03:00"
 draft: false
+params:
+  author: acikgozb
 title: "Ping"
 summary: "An analysis of one of the most used tools in TCP/IP."
 ---
