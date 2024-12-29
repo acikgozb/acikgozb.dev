@@ -13,6 +13,10 @@ params:
   disableThemeToggle: false
   defaultTheme: "dark"
 
+  assets:
+    favicon: "assets/favicon.ico"
+    apple_touch_icon: "assets/apple-touch-icon.png"
+
   profileMode:
     enabled: true
     title: "Hello there 👋"

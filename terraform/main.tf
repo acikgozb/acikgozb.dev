@@ -47,6 +47,8 @@ locals {
     "xml"  = "application/xml"
     "html" = "text/html"
     "css"  = "text/css"
+    "ico"  = "image/x-icon"
+    "png"  = "image/png"
   }
 
   default_tags = {
