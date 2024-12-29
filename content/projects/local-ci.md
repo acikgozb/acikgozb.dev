@@ -1,6 +1,8 @@
 ---
 date: "2024-12-03T11:37:25+03:00"
 draft: false
+params:
+  author: acikgozb
 title: "Local CI"
 summary: "Test your Jenkins pipelines locally."
 ---

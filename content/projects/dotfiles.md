@@ -1,6 +1,8 @@
 ---
 date: "2024-12-02T16:55:15+03:00"
 draft: false
+params:
+  author: acikgozb
 title: "Dotfiles"
 summary: "Local environment configuration. Powered by Ansible."
 ---
