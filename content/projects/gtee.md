@@ -2,7 +2,7 @@
 date: "2025-01-04T02:27:04+03:00"
 draft: false
 title: "gtee"
-summary: A go implementation of `tee`, a GNU Coreutils tool.
+summary: A Go implementation of `tee`, a GNU Coreutils tool.
 ---
 
 Before saying goodbye to 2024, I wanted to do one last project, one last thing before moving on to bigger adventures in 2025.
