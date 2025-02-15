@@ -1,6 +1,6 @@
 ---
 date: "2025-02-15T12:34:28+03:00"
-draft: true
+draft: false
 title: "Get Comfortable With Being Uncomfortable"
 params:
   author: acikgozb
