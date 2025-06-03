@@ -33,6 +33,8 @@ params:
       url: "https://linkedin.com/in/acikgozb/"
     - name: "github"
       url: "https://github.com/acikgozb"
+    - name: "mastodon"
+      url: "https://mastodon.social/@acikgozb"
   ShowReadingTime: true
   ShowBreadCrumbs: true
   ShowPostNavLinks: true
